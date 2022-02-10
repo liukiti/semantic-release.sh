@@ -21,7 +21,8 @@ for cmd in awk basename cat curl jq git touch;
 }
 
 # ---- VARS ----
-ORGANIZATION=$(awk '/url/{print $NF}' .git/config | rev | cut -d '/' -f  2 | rev)
+#ORGANIZATION=$(awk '/url/{print $NF}' .git/config | rev | cut -d '/' -f  2 | rev)
+ORGANIZATION=$(awk '/url/{print $NF}' .git/config | rev | cut -d '/' -f  2 | cut -d ':' -f 1 | rev)
 REPOSITORY=$(basename -s .git "$(awk '/url/{print $NF}' .git/config)")
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 BASE_URL="https://api.github.com"
