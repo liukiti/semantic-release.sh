@@ -35,7 +35,7 @@ COMPARE_URL="${REPOSITORY_BASE_URL}/compare"
   echo "[$(date)][AUTH]: Error! release needs GH_TOKEN, use export GH_TOKEN='YOURTOKEN'."
   exit 1
 }
-AUTH_RESPONSE=$(curl --silent -I -X GET  -H "Authorization: token ${GH_TOKEN}" "${BASE_URL}" | awk '/^Status/{print $2}')
+AUTH_RESPONSE=$(curl --silent -I -X GET  -H "Authorization: token ${GH_TOKEN}" "${BASE_URL}" | awk '/^HTTP\/2/{print $2}')
 [ "${AUTH_RESPONSE}" = "200" ] && echo "[$(date)][AUTH]: authentification success." || {
   echo "[$(date)][AUTH]: Error! authentification failed."
   exit 1
