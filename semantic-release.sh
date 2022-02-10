@@ -42,7 +42,7 @@ AUTH_RESPONSE=$(curl --silent -I -X GET  -H "Authorization: token ${GH_TOKEN}" "
 }
 
 echo "${GH_EMAIL}"
-echo "${secrets.GH_USER}"
+echo "${GH_USER}"
 git config user.email "${GH_EMAIL}"
 git config user.name "${GH_USER}"
 git push --dry-run --no-verify https://"${GH_TOKEN}":"${GH_TOKEN}"@github.com/"${ORGANIZATION}"/"${REPOSITORY}" || {
