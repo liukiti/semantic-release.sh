@@ -69,6 +69,7 @@ TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGA
 }
 
 # ---- INIT DATA ----
+echo ${GIT_ARG}
 SHAS=$(git log ${GIT_ARG} --format="%H %s%b"  | awk -v REGEX_CONVENTIONAL_COMMITS="${REGEX_CONVENTIONAL_COMMITS}" '$2 ~ REGEX_CONVENTIONAL_COMMITS {printf("%s|",$1)}')
 COMMENTS=$(git log ${GIT_ARG} --format="%H %s%b"  | awk -v REGEX_CONVENTIONAL_COMMITS="${REGEX_CONVENTIONAL_COMMITS}" '$2 ~ REGEX_CONVENTIONAL_COMMITS {for(i=2;i<=NF;++i)printf("%s ",$i); printf("|")}')
 
