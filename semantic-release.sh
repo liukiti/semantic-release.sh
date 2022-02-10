@@ -41,9 +41,9 @@ AUTH_RESPONSE=$(curl --silent -I -X GET  -H "Authorization: token ${GH_TOKEN}" "
   echo "[$(date)][AUTH]: Error! authentification failed."
   exit 1
 }
-git tag
-#git config user.email "${GH_EMAIL}"
-#git config user.name "${GH_USER}"
+
+git config user.email "${GH_EMAIL}"
+git config user.name "${GH_USER}"
 git push --dry-run --no-verify https://"${GH_TOKEN}":"${GH_TOKEN}"@github.com/"${ORGANIZATION}"/"${REPOSITORY}" || {
   echo "[$(date)][AUTH]: Error! can't push to ${REPOSITORY}."
   exit 1
