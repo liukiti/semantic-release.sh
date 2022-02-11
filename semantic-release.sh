@@ -60,15 +60,25 @@ TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGA
 
 [ -z "${TAGS}" ]&& {
   echo "$(date)][INIT_TAG]: no previous semVer releases found.";
-  NEXT_VERSION="1.0.0";
-  NEXT_TAG="v1.0.0";
+  if [[${PRE_RELEASE_BOOLEAN} -eq "false"]]; then
+    NEXT_VERSION="1.0.0";
+    NEXT_TAG="v1.0.0";
+  else
+    NEXT_VERSION="1.0.0-pre";
+    NEXT_TAG="v1.0.0-pre";
+  fi
   GIT_ARG="";
   echo "$(date)][INIT_TAG]: Next release version will be ${NEXT_VERSION} tagged: ${NEXT_TAG} .";
 } || {
   LATEST_TAG=$(echo "${TAGS}" | awk -v preRelease="${PRE_RELEASE_REGEX}" 'BEGIN{FS="|";RS=","} $2 ~ preRelease {print $1; exit}');
   [ -z "${LATEST_TAG}" ]&& { 
+  if [[${PRE_RELEASE_BOOLEAN} -eq "false"]]; then
     NEXT_VERSION="1.0.0";
     NEXT_TAG="v1.0.0";
+  else
+    NEXT_VERSION="1.0.0-pre";
+    NEXT_TAG="v1.0.0-pre";
+  fi
     GIT_ARG=""; 
   } || { 
   GIT_ARG="${LATEST_TAG}..HEAD";
@@ -102,7 +112,12 @@ BEGIN{RS="|"}
   }
 }
 END{printf("%s.%s.%s",CURRENT_MAJOR,CURRENT_MINOR,CURRENT_PATCH)}')
-NEXT_TAG="v${NEXT_VERSION}"
+#NEXT_TAG="v${NEXT_VERSION}"
+if [[${PRE_RELEASE_BOOLEAN} -eq "false"]]; then
+  NEXT_TAG="v${NEXT_VERSION}";
+else
+  NEXT_TAG="v${NEXT_VERSION}-pre";
+fi
 [ "${LATEST_TAG}" = "${NEXT_TAG}" ] && {
   echo "[$(date)][TAGS]: Nothing new to release."
   exit 0
