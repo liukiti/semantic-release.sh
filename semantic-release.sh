@@ -56,7 +56,7 @@ NEXT_TAG=""
 NEXT_VERSION=""
 PRE_RELEASE_REGEX=$([ "${RELEASE_BRANCH}" != "${BRANCH}" ] && echo  "^true" || echo  "^false")
 PRE_RELEASE_BOOLEAN=$(echo "${PRE_RELEASE_REGEX}" | awk '{print substr($0,2,length($0)-1)}')
-TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGANIZATION}/${REPOSITORY}/releases" | jq -j  '.[]| .name,"|",.prerelease,"\n"' | awk 'BEGIN{FS="|"}$1 ~ /^v[0-9]+\.[0-9]+\.[0-9]+$/{printf("%s,",$0)}')
+TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGANIZATION}/${REPOSITORY}/releases" | jq -j  '.[]| .name,"|",.prerelease,"\n"' | awk 'BEGIN{FS="|"}$1 ~ /^v[0-9]+\.[0-9]+\.[0-9]+(-pre)?$/{printf("%s,",$0)}')
 
 [ -z "${TAGS}" ]&& {
   echo "$(date)][INIT_TAG]: no previous semVer releases found.";
