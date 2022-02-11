@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ---- RULES ----
-RELEASE_BRANCH="master"
+RELEASE_BRANCH="main"
 REGEX_CONVENTIONAL_COMMITS='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test).*:*$'
 REGEX_MAJOR='BREAKING.CHANGE'
 REGEX_MINOR='^feat'
