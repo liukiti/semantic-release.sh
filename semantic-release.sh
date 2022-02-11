@@ -67,7 +67,8 @@ TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGA
 } || {
   LATEST_TAG=$(echo "${TAGS}" | awk -v preRelease="${PRE_RELEASE_REGEX}" 'BEGIN{FS="|";RS=","} $2 ~ preRelease {print $1; exit}');
   [ -z "${LATEST_TAG}" ]&& { 
-    LATEST_TAG="0.0.0";
+    NEXT_VERSION="1.0.0";
+    NEXT_TAG="v1.0.0";
     GIT_ARG=""; 
   } || { 
   GIT_ARG="${LATEST_TAG}..HEAD";
