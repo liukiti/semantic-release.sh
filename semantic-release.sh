@@ -66,8 +66,13 @@ TAGS=$(curl --silent -H  "Authorization: token ${GH_TOKEN}" "${REPOS_URL}/${ORGA
   echo "$(date)][INIT_TAG]: Next release version will be ${NEXT_VERSION} tagged: ${NEXT_TAG} .";
 } || {
   LATEST_TAG=$(echo "${TAGS}" | awk -v preRelease="${PRE_RELEASE_REGEX}" 'BEGIN{FS="|";RS=","} $2 ~ preRelease {print $1; exit}');
+  [ -z "${LATEST_TAG}" ]&& { 
+    LATEST_TAG="0.0.0";
+    GIT_ARG=""; 
+  } || { 
   GIT_ARG="${LATEST_TAG}..HEAD";
   echo "$(date)][INIT_TAG]: previous semVer releases found, Lates tag : ${LATEST_TAG}";
+  }
 }
 
 # ---- INIT DATA ----
