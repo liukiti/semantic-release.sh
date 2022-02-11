@@ -103,7 +103,7 @@ BEGIN{RS="|"}
 }
 END{printf("%s.%s.%s",CURRENT_MAJOR,CURRENT_MINOR,CURRENT_PATCH)}')
 #NEXT_TAG="v${NEXT_VERSION}"
-if [[${PRE_RELEASE_BOOLEAN} == "false"]]; then
+if [[${PRE_RELEASE_BOOLEAN} == "true"]]; then
   NEXT_TAG="v${NEXT_VERSION}";
 else
   NEXT_TAG="v${NEXT_VERSION}-pre";
