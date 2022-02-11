@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ---- RULES ----
-RELEASE_BRANCH="main"
+RELEASE_BRANCH="master"
 REGEX_CONVENTIONAL_COMMITS='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test).*:*$'
 REGEX_MAJOR='BREAKING.CHANGE'
 REGEX_MINOR='^feat'
@@ -103,12 +103,12 @@ BEGIN{RS="|"}
 }
 END{printf("%s.%s.%s",CURRENT_MAJOR,CURRENT_MINOR,CURRENT_PATCH)}')
 #NEXT_TAG="v${NEXT_VERSION}"
-echo ${{PRE_RELEASE_BOOLEAN}}...
-if [[${PRE_RELEASE_BOOLEAN} == "true"]]; then
+echo ${PRE_RELEASE_BOOLEAN}
+[ "${PRE_RELEASE_BOOLEAN}" = "false" ] && {
   NEXT_TAG="v${NEXT_VERSION}";
-else
+} || {
   NEXT_TAG="v${NEXT_VERSION}-pre";
-fi
+}
 [ "${LATEST_TAG}" = "${NEXT_TAG}" ] && {
   echo "[$(date)][TAGS]: Nothing new to release."
   exit 0
