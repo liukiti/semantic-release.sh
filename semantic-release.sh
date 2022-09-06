@@ -107,7 +107,12 @@ echo ${PRE_RELEASE_BOOLEAN}
 [ "${PRE_RELEASE_BOOLEAN}" = "false" ] && {
   NEXT_TAG="v${NEXT_VERSION}";
 } || {
+  SUFIX_TAG=$(echo "${NEXT_VERSION}" | awk 'BEGIN{FS="-"}{print $2}');
+  [ -z "${SUFIX_TAG}" ]&& {
   NEXT_TAG="v${NEXT_VERSION}-pre";
+  } || {
+  NEXT_TAG="v${NEXT_VERSION}";
+  } 
 }
 [ "${LATEST_TAG}" = "${NEXT_TAG}" ] && {
   echo "[$(date)][TAGS]: Nothing new to release."
